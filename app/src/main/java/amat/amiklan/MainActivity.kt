@@ -1,8 +1,6 @@
 package amat.amiklan
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import android.support.design.widget.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+       /* val mBottomNavigationView = findViewById(R.id.navigation) as BottomNavigationView
+        val layoutParams = mBottomNavigationView.getLayoutParams() as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = BottomNavigationViewBehavior()*/
        /* fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -31,6 +34,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+
+        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                if (verticalOffset<-50){
+                    //fabShowHide(true)
+                    navigationbottom.clearAnimation()
+                    navigationbottom.animate().translationY(navigationbottom.height.toFloat()).setDuration(200);
+                }else{
+                    navigationbottom.clearAnimation()
+                    navigationbottom.animate().translationY(0F).setDuration(200);
+
+                    //fabShowHide(false)
+                }
+            }
+
+        })
+
     }
 
     override fun onBackPressed() {
